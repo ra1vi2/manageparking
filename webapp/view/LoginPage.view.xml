@@ -1,0 +1,22 @@
+<mvc:View controllerName="commanageparking.controller.LoginPage" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m">
+	<App>
+		<pages>
+			<Page title="{i18n>title}" showHeader="false" class="w3-backGround" enableScrolling="false">
+				<content>
+					<VBox class="w3-row w3-display-middle w3-card-1">
+						<Text text="Parking Space Reservation Manager" class="w3-xxlarge animated fadeInUp titleStyle"/>
+						<VBox class="w3-container w3-padding-10">
+							<Image class="w3-margin-top w3-margin-bottom" src="logo_here.png"/>
+						</VBox>
+						<VBox class="w3-container w3-padding-10">
+							<Input value="{login>/userID}" placeholder="User ID" class="w3-input w3-border-0 w3-round-large"/>
+							<Input type="Password" value="{login>/password}" placeholder="Password" class="w3-input w3-border-0 w3-round-large"/>
+							<Button class="w3-btn w3-ripple w3-border-0 w3-round-large" text="Login" press="onUserLogin"/>
+						</VBox>
+					</VBox>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
