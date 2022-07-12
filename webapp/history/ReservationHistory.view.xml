@@ -1,0 +1,62 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="commanageparking.history.controller.ReservationHistory" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App id="app">
+		<pages>
+			<Page title="Reservation History" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<Table id="idRevisionTable" inset="false" items="{history>/}">
+						<infoToolbar>
+							<OverflowToolbar>
+								<Label text="List of all reservations"/>
+							</OverflowToolbar>
+						</infoToolbar>
+						<columns>
+							<Column >
+								<Text text="Reservation ID"/>
+							</Column>
+							<Column >
+								<Text text="Start Date"/>
+							</Column>
+							<Column>
+								<Text text="End Date"/>
+							</Column>
+							<Column >
+								<Text text="Spot ID"/>
+							</Column>
+							<Column >
+								<Text text="Start Time"/>
+							</Column>
+							<Column >
+								<Text text="End Time"/>
+							</Column>
+							<Column >
+								<Text text="Spot Type"/>
+							</Column>
+							<Column >
+								<Text text="ReservationType"/>
+							</Column>
+							<Column >
+								<Text text="Reservation Commetns"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle">
+								<cells>
+									<Text text="{history>ReservationId}"/>
+									<Text text="{history>StartDate}"/>
+									<Text text="{history>EndDate}"/>
+									<Text text="{history>SpotId}"/>
+									<Text text="{history>StartTime}"/>
+									<Text text="{history>EndTime}"/>
+									<Text text="{history>Type}"/>
+									<Text text="{history>ReservationType}"/>
+									<Text text="{history>ReservationCommetns}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

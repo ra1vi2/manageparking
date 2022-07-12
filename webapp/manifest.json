@@ -109,6 +109,10 @@
 				"name": "reservation",
 				"pattern": "reservation",
 				"target": ["reservation"]
+			}, {
+				"name": "history",
+				"pattern": "history",
+				"target": ["history"]
 			}],
 			"targets": {
 				"Main": {
@@ -122,6 +126,12 @@
 					"transition": "slide",
 					"viewId": "object.Reservation",
 					"viewName": "object.Reservation"
+				},
+				"history": {
+					"viewType": "XML",
+					"transition": "slide",
+					"viewId": "history.ReservationHistory",
+					"viewName": "history.ReservationHistory"
 				}
 			}
 		}

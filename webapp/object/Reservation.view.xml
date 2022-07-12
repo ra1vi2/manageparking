@@ -8,6 +8,7 @@
 					<Toolbar >
 						<ToolbarSpacer/>
 						<Text text="{User>/Name}"></Text>
+						<Button id="idReservationHistoryBtn" text="View Reservation History" press="onPressReservationHistory" visible="false" />
 						<Button text="Logout" type="Transparent" press="onLogout"></Button>
 					</Toolbar>
 					<f:GridList id="gridList" mode="SingleSelectMaster" items="{ path: 'spots>/' }" selectionChange="onGridSelectionChange"
@@ -23,6 +24,7 @@
 										<Label text="{path: 'spots>Status', formatter: '.formatter.getSpotStatusText'}" wrapping="true"/>
 										<Label text="{path: 'spots>Type', formatter: '.formatter.getSpotTypeText'}" wrapping="true"/>
 									</VBox>
+									<Image src="charging.jpg" width="100%" class="imageDisplayBlock"/>
 								</HBox>
 							</VBox>
 						</f:GridListItem>
@@ -41,12 +43,12 @@
 								<DatePicker id="idEndDate" value="{path: 'reservationDetails>/EndDate' , type: 'sap.ui.model.odata.type.Date'}"/>
 								<!-- Time -->
 								<Label id="lblStartTime" text="Start Time"/>
-								<TimePicker id="idStartTime" value="{path: 'reservationDetails>/StartTime' , type: 'sap.ui.model.odata.type.Time'}" />
+								<TimePicker id="idStartTime" value="{path: 'reservationDetails>/StartTime' , type: 'sap.ui.model.odata.type.Time'}"/>
 								<Label id="lblEndTime" text="End Time"/>
 								<TimePicker id="idEndTime" value="{path: 'reservationDetails>/EndTime' , type: 'sap.ui.model.odata.type.Time'}"/>
 								<!-- Comments -->
 								<Label text="Comments"/>
-								<Input value="{reservationDetails>/ReservationComments}" />
+								<Input value="{reservationDetails>/ReservationComments}"/>
 								<Label/>
 								<Button text="Reserve Spots" press="onPressReserve"/>
 							</form:content>

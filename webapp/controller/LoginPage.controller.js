@@ -16,7 +16,7 @@ sap.ui.define([
 			BO.loginUser(oModel, oData)
 				.then(function(oResponse) {
 					//navigate to
-					sap.ui.getCore().setModel(new JSONModel(oResponse), "User");
+					sap.ui.getCore().setModel(new JSONModel(oResponse.results[0]), "User");
 					that.getOwnerComponent().getRouter().navTo("reservation");
 				})
 				.fail(function(oError) {

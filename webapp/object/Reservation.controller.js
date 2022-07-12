@@ -27,8 +27,10 @@ sap.ui.define([
 			this.getView().setModel(new JSONModel({}), "reservationDetails");
 			if (userData.Type === "A") {
 				this.byId("gridList").setMode("MultiSelect");
+				this.byId("idReservationHistoryBtn").setVisible(true);
 			} else {
 				this.byId("gridList").setMode("SingleSelectMaster");
+				this.byId("idReservationHistoryBtn").setVisible(false);
 			}
 			this.getSpotList();
 		},
@@ -56,12 +58,20 @@ sap.ui.define([
 		onGridSelectionChange: function(oEvent) {
 
 		},
+		onPressReservationHistory: function() {
+			this.getOwnerComponent().getRouter().navTo("history");
+		},
 		onPressReserve: function() {
 			var userData = sap.ui.getCore().getModel("User").getData();
 			var items = this.byId("gridList").getSelectedItems();
 
-			var resData = this.getView().setModel("reservationDetails").getData();
-			var reservationID = resData.StartDate + resData.EndDate + resData.UserID;
+			var resData = this.getView().getModel("reservationDetails").getData();
+
+			//concatenate current date, time and created by userid.
+			// looking at reservation id will give the idea of who and when reservation was created
+			var d = new Date();
+			var reservationID = d.getDate().toString() + d.getMonth().toString() + d.getFullYear().toString() +
+				d.getHours().toString() + d.getMinutes().toString() + d.getSeconds().toString() + resData.UserID;
 
 			var aPayload = {
 				UserId: userData.Id,
@@ -70,7 +80,7 @@ sap.ui.define([
 			};
 
 			items.forEach(function(item) {
-				var oContext = items.getBindingContext("spots");
+				var oContext = item.getBindingContext("spots");
 				var sPath = oContext.getPath();
 				var selectedObject = oContext.getModel().getObject(sPath);
 
@@ -90,7 +100,7 @@ sap.ui.define([
 			});
 			BO.createReservation(this.getView().getModel(), aPayload)
 				.then(function(oResponse) {
-					sap.m.MessageToast.show("Reservation Create Successfully");
+					sap.m.MessageToast.show("Reservation Created Successfully");
 					this._onPatternMatchedDetail();
 				}.bind(this))
 				.fail(function(oError) {
