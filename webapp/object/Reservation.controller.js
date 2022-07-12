@@ -17,7 +17,7 @@ sap.ui.define([
 		onInit: function() {
 			this.getOwnerComponent()
 				.getRouter()
-				.getRoute("detail")
+				.getRoute("reservation")
 				.attachPatternMatched(this._onPatternMatchedDetail, this);
 
 		},
@@ -53,12 +53,49 @@ sap.ui.define([
 					this.getView().setModel(new JSONModel(oResponse.results), "spots");
 				}.bind(this));
 		},
-		onSpotItemPress: function(oEvent) {
-			this.byId("reservationdetailsform").setVisible(true);
-            this.selectedSpots = oEvent.getSource(); // list. getSelectedItems
-		}, 
-		onPressReserve:function(){
+		onGridSelectionChange: function(oEvent) {
+
+		},
+		onPressReserve: function() {
 			var userData = sap.ui.getCore().getModel("User").getData();
+			var items = this.byId("gridList").getSelectedItems();
+
+			var resData = this.getView().setModel("reservationDetails").getData();
+			var reservationID = resData.StartDate + resData.EndDate + resData.UserID;
+
+			var aPayload = {
+				UserId: userData.Id,
+				ReservationId: reservationID,
+				Reservations: []
+			};
+
+			items.forEach(function(item) {
+				var oContext = items.getBindingContext("spots");
+				var sPath = oContext.getPath();
+				var selectedObject = oContext.getModel().getObject(sPath);
+
+				var reserv = {
+					ReservationId: reservationID,
+					SpotId: selectedObject.SpotId,
+					ReservationCommetns: selectedObject.ReservationComments,
+					StartTime: resData.StartTime,
+					EndTime: resData.EndTime,
+					StartDate: resData.StartDate,
+					EndDate: resData.EndDate,
+					Status: 'R',
+					Type: selectedObject.Type,
+					ReservationType: userData.Type
+				};
+				aPayload.Reservations.push(reserv);
+			});
+			BO.createReservation(this.getView().getModel(), aPayload)
+				.then(function(oResponse) {
+					sap.m.MessageToast.show("Reservation Create Successfully");
+					this._onPatternMatchedDetail();
+				}.bind(this))
+				.fail(function(oError) {
+					sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+				});
 		}
 
 		/**

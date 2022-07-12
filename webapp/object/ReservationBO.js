@@ -10,6 +10,9 @@ sap.ui.define([
 		getSpotList: function(oModel, Odata) {
 			return this.readData(oModel, "/SpotSet");
 		},
+		createReservation:function(oModel, aData){
+			return this.submitData(oModel, "/ReservationHeaderSet", aData);
+		},
 		submitData: function(oModel, sPath, aData) {
 			return Utility.odataCreate(oModel, sPath, aData);
 		},

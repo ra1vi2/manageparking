@@ -11,7 +11,7 @@ sap.ui.define([
 		},
 		onUserLogin: function() {
 			var oData = this.getView().getModel("login").getData();
-			var oModel = this.getView().getModel("parking_srv");
+			var oModel = this.getView().getModel();
 			var that = this;
 			BO.loginUser(oModel, oData)
 				.then(function(oResponse) {

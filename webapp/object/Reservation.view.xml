@@ -1,7 +1,7 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="commanageparking.object.Reservation"
 	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:grid="sap.ui.layout.cssgrid" xmlns:f="sap.f" xmlns:l="sap.ui.layout"
 	xmlns:form="sap.ui.layout.form">
-	<App>
+	<App id="app">
 		<pages>
 			<Page title="Manage Reservation">
 				<content>
@@ -10,18 +10,18 @@
 						<Text text="{User>/Name}"></Text>
 						<Button text="Logout" type="Transparent" press="onLogout"></Button>
 					</Toolbar>
-					<f:GridList id="gridList" mode="SingleSelectMaster" items="{ path: 'spots>/' }" selectionChange="onSelectionChange"
+					<f:GridList id="gridList" mode="SingleSelectMaster" items="{ path: 'spots>/' }" selectionChange="onGridSelectionChange"
 						class="sapUiResponsiveContentPadding">
 						<f:customLayout>
 							<grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(16rem, 1fr))" gridGap="0.5rem"/>
 						</f:customLayout>
-						<f:GridListItem press="onSpotItemPress" highlight="{path : 'spots>Type', formatter: '.formatter.getSpotColor'}">
+						<f:GridListItem press="onSpotItemPress" highlight="{path : 'spots>Type', formatter: '.formatter.getSpotColor'}" width="80%">
 							<VBox height="100%">
 								<HBox height="100%" class="sapUiSmallMargin" alignItems="Center">
 									<VBox>
 										<Title text="{spots>SpotId}" wrapping="true"/>
 										<Label text="{path: 'spots>Status', formatter: '.formatter.getSpotStatusText'}" wrapping="true"/>
-										<Label text="{path: 'spots>Type', formatter: '.formatter.getSpotStatusText'}" wrapping="true"/>
+										<Label text="{path: 'spots>Type', formatter: '.formatter.getSpotTypeText'}" wrapping="true"/>
 									</VBox>
 								</HBox>
 							</VBox>
@@ -30,14 +30,25 @@
 					<VBox class="sapUiMediumMarginTop">
 						<form:SimpleForm id="reservationdetailsform" editable="true" layout="ResponsiveGridLayout" title="Provide Reservation Details"
 							labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
-							emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" visible="false">
+							emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" visible="true">
 							<form:content>
-								<Label text="Reserve For (User ID :)"/>
-								<Input id="username" value="{reservationDetails>/UserID}"/>
-								<Label text="Start Time"/>
-								<Input value=""></Input>
-								<Label text="End Time"/>
-								<Input value=""/>
+								<Label text="Reserve For"/>
+								<Input id="username" value="{reservationDetails>/UserID}" placeholder="Provide employee user ID"/>
+								<!-- Date -->
+								<Label id="lblStartDate" text="Start Date"/>
+								<DatePicker id="idStartDate" value="{path: 'reservationDetails>/StartDate' , type: 'sap.ui.model.odata.type.Date'}"/>
+								<Label id="lblEndDate" text="End Date"/>
+								<DatePicker id="idEndDate" value="{path: 'reservationDetails>/EndDate' , type: 'sap.ui.model.odata.type.Date'}"/>
+								<!-- Time -->
+								<Label id="lblStartTime" text="Start Time"/>
+								<TimePicker id="idStartTime" value="{path: 'reservationDetails>/StartTime' , type: 'sap.ui.model.odata.type.Time'}" />
+								<Label id="lblEndTime" text="End Time"/>
+								<TimePicker id="idEndTime" value="{path: 'reservationDetails>/EndTime' , type: 'sap.ui.model.odata.type.Time'}"/>
+								<!-- Comments -->
+								<Label text="Comments"/>
+								<Input value="{reservationDetails>/ReservationComments}" />
+								<Label/>
+								<Button text="Reserve Spots" press="onPressReserve"/>
 							</form:content>
 						</form:SimpleForm>
 					</VBox>
